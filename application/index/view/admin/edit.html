@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file='public/head'}
+<body>
+<script>
+    (function ($) {
+        $.getUrlParam = function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+    })(jQuery);
+    $(function () {
+        $("#pet_id").attr("value", $.getUrlParam('id'));
+        $("#update-form").attr("action", "{:url('admin/edit')}?id=" + $.getUrlParam('id'));
+    })
+</script>
+<div id="f-toolbar">
+    <button class="btn btn-default"><a href="{:url('admin/list_all')}"><span class="glyphicon glyphicon-arrow-left">&nbsp;返回列表</span></a>
+    </button>
+</div>
+<div id="pt-insert">
+    <form id="update-form" method="post">
+        <table class="pt-insert-table table table-bordered">
+            <tr>
+                <th colspan="2">管理员注册</th>
+            </tr>
+            <tr>
+                <td>*账号：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="user_name" value="{$data.user_name}" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>*密码：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" value="{$data.password}" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>*真实姓名：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="real_name" value="{$data.real_name}" required readonly>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>*电话：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="phone" value="{$data.phone}" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>email：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" value="{$data.email}">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>QQ：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="QQ" value="{$data.QQ}">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>微信号：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="wechat" value="{$data.wechat}">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" class="btn btn-primary" value="保存"/>
+                </td>
+            </tr>
+        </table>
+
+
+    </form>
+</div>
+</body>
+</html>

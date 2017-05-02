@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file='public/head'}
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>修改权限</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <hr>
+            <form action='{:url("access/edit")}' method="post">
+                <div class="form-group">
+                    <label for="access-title">权限标题</label>
+                    <input type="text" class="form-control" id="access-title" name="title" placeholder="请输入权限的名称" aria-describedby="helpBlock2" value="{$data.title}">
+                    <span class="help-block"></span>
+                </div>
+                <div class="form-group">
+                    <label for="access-uri">对应的uri</label>
+                    <input type="text" class="form-control" id="access-uri" name="uris" placeholder="请输入对应权限的uri" value="{$data.uris}" >
+                    <span></span>
+                </div>
+                <input type="hidden" name="id" value="{$data.id}">
+                <button type="submit" class="btn btn-default">保存</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("input").on("blur",function (event) {
+            $.ajax({
+                url:'{:url("access/edit")}',
+                type:'post',
+                data:{title:this.value},
+                success:function (msg) {
+                    $('#access-title').next().css('color','red').text(msg);
+//                $('#access-title').next().text(msg);
+                },
+                error:function (msg) {
+                    console.log("错误："+msg);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

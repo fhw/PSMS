@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<div id="f-toolbar">
+    <form method="post" action="{:url('pet_products/select_by_keyword')}?p=stock_list" enctype="multipart/form-data">
+        <input type="text" name="keyword" id="pp-keyword" placeholder="请输入关键字">
+        <input type="submit" value="搜索" id="pp-search-button" class="btn btn-primary">
+    </form>
+</div>
+<hr>
+{$petproducts->render()}
+<div id="pp-showall" class="table-responsive">
+    <table class="table">
+        <tr>
+            <th><a id="order-id" class="asc">id</a></th>
+            <th><a id="order-product-name">商品名</a></th>
+            <th>类型</th>
+            <th><a id="order-socks">库存数量</a></th>
+            <th><a id="order-price">价格</a></th>
+            <th><a id="order-sales">销量</a></th>
+            <th><a id="order-sale-date">上架时间</a></th>
+            <th>操作</th>
+        </tr>
+        {volist name="petproducts" id="vo"}
+
+        <tr>
+            <td class="this_id">{$vo.id}</td>
+            <td>{$vo.product_name}</td>
+            <td>{$vo.type_name}</td>
+            <td>{$vo.stock}</td>
+            <td>{$vo.price}</td>
+            <td>{$vo.sales}</td>
+            <td>{$vo.on_sale_date}</td>
+            <td>
+                <a href="{:url('pet_products/detail')}?id={$vo.id}" type="button" class="btn btn-danger">详情</a>
+                <button type="button" class="show-stock1 btn btn-danger">出库</button>
+                <button type="button" class="show-stock2 btn btn-danger">入库</button>
+            </td>
+        </tr>
+        {/volist}
+    </table>
+</div>
+<div class="add-stock-div">
+    <form class="form-inline" role="form" id="add-stock-form">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a href="javascript:;" title="关闭" class="close">×</a>
+                <h3 class="panel-title">请输入入库数量：</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <input type="number" class="form-control" name="stock" placeholder="请输入大于0的数量" required>
+                        <button id="add-stock-button" type="button" class="btn btn-danger">保存</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<div class="out-stock-div">
+    <form class="form-inline" role="form" id="out-stock-form">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a href="javascript:;" title="关闭" class="close">×</a>
+                <h3 class="panel-title">请输入出库数量：</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <input type="number" class="form-control" name="stock" placeholder="请输入大于0的数量" required>
+                    <button id="out-stock-button" type="button" class="btn btn-danger">保存</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<div class="mask">
+</div>
+
+<script>
+    $(function () {
+        var find_id = null;
+
+        $(".show-stock2").click(function () {
+            find_id = $(this).parent().parent().find(".this_id").html();
+            $(".mask").fadeIn(100);
+            $(".add-stock-div").slideDown(200);
+        });
+
+
+        $(".show-stock1").click(function () {
+            find_id = $(this).parent().parent().find(".this_id").html();
+            $(".mask").fadeIn(100);
+            $(".out-stock-div").slideDown(200);
+        });
+
+        $(".panel-heading .close").click(function () {
+            $(".mask").fadeOut(100);
+            $(".add-stock-div").slideUp(200);
+            $(".out-stock-div").slideUp(200);
+        });
+
+        $("#add-stock-button").click(function () {
+            $.ajax({
+                url: "{:url('pet_products/add_stock')}",
+                type:'post',
+                data: $("#add-stock-form").serialize() + "&id=" + find_id,
+                success:function (msg) {
+                    $(".mask").fadeOut(100);
+                    $(".add-stock-div").slideUp(200);
+                    alert(msg);
+                    window.location.reload();
+                },
+                error:function (msg) {
+                    alert(msg);
+                }
+            });
+        });
+
+        $("#out-stock-button").click(function () {
+            $.ajax({
+                url: "{:url('pet_products/out_stock')}",
+                type:'post',
+                data: $("#out-stock-form").serialize() + "&id=" + find_id,
+                success:function (msg) {
+                    $(".mask").fadeOut(100);
+                    $(".out-stock-div").slideUp(200);
+                    alert(msg);
+                    window.location.reload();
+                },
+                error:function (msg) {
+                    alert(msg);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

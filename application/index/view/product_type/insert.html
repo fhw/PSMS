@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<div id="f-toolbar">
+    <button class="btn btn-default"><a href="{:url('product_type/select')}"><span class="glyphicon glyphicon-arrow-left">&nbsp;返回列表</span></a></button>
+</div>
+<div id="pt-insert">
+    <form id="pt-insert-form" action="{:url('product_type/insert')}" method="post">
+        <table class="pt-insert-table table table-bordered">
+            <tr>
+                <th colspan="2">添加商品类型</th>
+            </tr>
+            <tr>
+                <td>添加新的商品类型：</td>
+                <td>
+                    <input type="text" name="type_name" id="pt-insert-input" required>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" class="btn btn-primary"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

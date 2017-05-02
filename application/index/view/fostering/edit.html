@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<div id="f-toolbar">
+    <button class="btn btn-default"><a href="{:url('fostering/all')}"><span class="glyphicon glyphicon-arrow-left">&nbsp;返回寄养列表</span></a></button>
+</div>
+<form action="{:url('fostering/update')}?id={$data.id}" method="post" enctype="multipart/form-data">
+    <div class="table-responsive">
+        <table class="insert table table-bordered">
+            <tr>
+                <th colspan="2">寄养登记</th>
+            </tr>
+            <tr>
+                <td>选择宠物</td>
+                <td>
+                    {$data.pet_name}
+                </td>
+            </tr>
+            <tr>
+                <td>开始时间</td>
+                <td>
+                    <input type="date" name="start_date" value="{$data.start_date}" required>
+                </td>
+            </tr>
+            <tr>
+                <td>结束时间</td>
+                <td>
+                    <input type="date" name="finish_date" value="{$data.finish_date}" required>
+                </td>
+            </tr>
+            <tr>
+                <td>状态</td>
+                <td>
+                    <input type="radio" value="0" name="status" {$data.status == 1 ? '':'checked'}>寄养结束
+                    <input type="radio" value="1" name="status" {$data.status == 1 ? 'checked':''}>寄养中
+                </td>
+            </tr>
+            <tr>
+                <td>单价</td>
+                <td><input type="text" name="price" value="{$data.price}" required>（元/天）</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="保存" class="btn btn-primary">
+                    <input type="reset" value="重置" class="btn btn-primary">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+</body>
+</html>

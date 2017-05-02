@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<script>
+    (function($){
+        $.getUrlParam = function(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r!=null) return unescape(r[2]); return null;
+        }
+    })(jQuery);
+    $(function(){
+        $("#type_id").attr("value",$.getUrlParam('type_id'));
+    })
+</script>
+<div id="f-toolbar">
+    <button class="btn btn-default"><a href="{:url('product_type/select')}"><span class="glyphicon glyphicon-arrow-left">&nbsp;返回列表</span></a></button>
+</div>
+<div id="pt-insert">
+    <form id="pt-insert-form" action="{:url('product_type/update')}" method="post">
+        <table class="pt-insert-table table table-bordered">
+            <tr>
+                <th colspan="2">修改商品类型</th>
+            </tr>
+            <tr>
+                <td>商品类型编号：</td>
+                <td>
+                    <input type="text" name="type_id" id="type_id" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>修改为新的商品类型：</td>
+                <td>
+                    <input type="text" name="type_name" id="pt-insert-input" value="{$data.type_name}" required>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" class="btn btn-primary"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

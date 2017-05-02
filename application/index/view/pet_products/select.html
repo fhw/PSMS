@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+    <div id="f-toolbar">
+        <form method="post" action="{:url('pet_products/select_by_keyword')}?p=select" enctype="multipart/form-data">
+            <input type="text" name="keyword" id="pp-keyword" placeholder="请输入关键字">
+            <input type="submit" value="搜索" id="pp-search-button" class="btn btn-primary">
+        </form>
+        <a href="{:url('pet_products/insert_view')}" type="button" class="btn btn-primary">新增</a>
+    </div>
+    <hr>
+    {$petproducts->render()}
+    <div id="pp-showall" class="table-responsive">
+        <table class="table">
+            <tr>
+                <th>id</th>
+                <th>商品名</th>
+                <th>类型</th>
+                <th>库存数量</th>
+                <th>价格</th>
+
+                <th>上架时间</th>
+                <th>操作</th>
+            </tr>
+            {volist name="petproducts" id="vo"}
+
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.product_name}</td>
+                <td>{$vo.type_name}</td>
+                <td>{$vo.stock}</td>
+                <td>{$vo.price}</td>
+
+                <td>{$vo.on_sale_date}</td>
+                <td>
+                    <a href="{:url('pet_products/detail')}?id={$vo.id}" type="button" class="btn btn-danger">编辑</a>
+                    <a href="{:url('pet_products/delete_by_id')}?id={$vo.id}" type="button" class="btn btn-danger">删除</a>
+                </td>
+            </tr>
+            {/volist}
+        </table>
+    </div>
+    <!--<script>-->
+        <!--$("#order-id").click(function () {-->
+            <!--if($("#order-id").hasClass('asc')){-->
+                <!--$("#order-id").removeClass('asc');-->
+                <!--$("#order-id").attr('href','{:url('pet_products/asc_by')}?order=id');-->
+            <!--}else {-->
+                <!--$("#order-id").addClass('asc');-->
+                <!--$("#order-id").attr('href','{:url('pet_products/desc_by')}?order=id');-->
+            <!--}-->
+        <!--});-->
+    <!--</script>-->
+</body>
+</html>

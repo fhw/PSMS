@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file='public/head'}
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h1>角色列表</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <a class="btn btn-primary navbar-btn" href="{:url('role/add_view')}">新增</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th>id</th>
+                        <th>角色</th>
+                        <th>操作</th>
+                    </tr>
+                    {volist name="r_list" id="list"}
+                    <tr>
+                        <td>{$list.id}</td>
+                        <td>{$list.name}</td>
+                        <td>
+                            <a id="role-edit-a" class="btn btn-primary" href="{:url('role/set_role_view')}?id={$list.id}">设置权限</a>
+                            <a id="role-delete-a" class="btn btn-danger" href="{:url('role/delete_by_id')}?id={$list.id}">删除</a>
+                            <!--<a class="btn btn-primary" href="">设置权限</a>-->
+                        </td>
+                    </tr>
+                    {/volist}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

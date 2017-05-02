@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<div id="f-toolbar">
+    <form action="{:url('fostering/find')}" method="post" enctype="multipart/form-data">
+        <input type="text" name="keyword">
+        <button type="submit" class="btn btn-primary">搜索</button>
+    </form>
+    <a href="{:url('fostering/add')}" class="btn btn-primary" role="button">新增</a>
+</div>
+
+{$data->render()}
+<div class="table-responsive">
+    <table class="table table-border">
+        <tr>
+            <th>编号</th>
+            <th>宠物编号</th>
+            <th>宠物名</th>
+            <th>主人</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>状态</th>
+            <th>价格</th>
+            <th>操作</th>
+        </tr>
+        {volist name="data" id="vo"}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.pet_id}</td>
+            <td>{$vo.pet_name}</td>
+            <td>{$vo.master}</td>
+            <td>{$vo.start_date}</td>
+            <td>{$vo.finish_date}</td>
+            <td>{switch name="vo.status"}
+                    {case value="0"}寄养结束{/case}
+                    {case value="1"}寄养中{/case}
+                    {default /}不明状态中
+                {/switch}</td>
+            <td>{$vo.price}</td>
+            <td>
+                <a href="{:url('fostering/find_by_id')}?id={$vo.id}" type="button" class="btn btn-danger">编辑</a>
+                <a href="{:url('fostering/delete_by_id')}?id={$vo.id}" type="button" class="btn btn-danger">删除</a>
+            </td>
+        </tr>
+        {/volist}
+    </table>
+</div>
+
+</body>
+</html>

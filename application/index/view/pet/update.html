@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<script>
+    (function ($) {
+        $.getUrlParam = function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+    })(jQuery);
+    $(function () {
+        $("#pet_id").attr("value", $.getUrlParam('id'));
+        $("#update-form").attr("action", "{:url('pet/update')}?id=" + $.getUrlParam('id'));
+    })
+</script>
+<div id="f-toolbar">
+    <a href="{:url('pet/pet_view')}" type="button" class="btn btn-default">返回列表</a>
+    <input class="btn btn-primary" form="update-form" type="submit" value="保存">
+</div>
+<form id="update-form" method="post" enctype="multipart/form-data">
+    <table class="insert table table-bordered">
+        <tr>
+            <th colspan="2">编辑一只宠物</th>
+        </tr>
+        <tr>
+            <td>宠物编号：</td>
+            <td><input type="text" name="id" id="pet_id" readonly/></td>
+        </tr>
+        <tr>
+            <td>宠物类型：</td>
+            <td>
+                <select name="pet_type">
+                    {volist name='pet_type_list' id='vo'}
+                    <option value="{$vo.id}" {$data.pet_type == $vo.id ? 'selected':''}>{$vo.pet_type_name}</option>
+                    {/volist}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>宠物名：</td>
+            <td><input type="text" name="pet_name" value="{$data.pet_name}" required/></td>
+        </tr>
+        <tr>
+            <td>性别：</td>
+            <td>
+                <select name="sex">
+                    <option value="0" {$data.sex=='1'?'':'selected'}>公</option>
+                    <option value="1" {$data.sex=='1'?'selected':''}>母</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>年龄：</td>
+            <td><input type="number" name="age" value="{$data.age}" required/>（单位：月）</td>
+        </tr>
+        <tr>
+            <td>主人：</td>
+            <td><input type="text" name="master" value="{$data.master}"/></td>
+        </tr>
+        <tr>
+            <td>是否健康：</td>
+            <td>
+                <select name="is_health">
+                <option value="0" {$data.is_health=='0'?'selected':''}>否</option>
+                <option value="1" {$data.is_health=='1'?'selected':''}>是</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td>是否出售</td>
+            <td>
+                <input type="radio" value="0" name="is_onsale" {$data.is_onsale=='1'?'':'checked'}>否
+                <input type="radio" value="1" name="is_onsale" {$data.is_onsale=='1'?'checked':''}>是
+                <input type="radio" value="2" name="is_onsale" {$data.is_onsale=='2'?'checked':''}>已出售
+                <!--<select name="is_onsale">-->
+                    <!--<option value="0" {//$data.is_onsale=='0'?'selected':''}>不卖</option>-->
+                    <!--<option value="1" {//$data.is_onsale=='1'?'selected':''}>卖</option>-->
+                <!--</select>-->
+            </td>
+        </tr>
+        <tr>
+            <td>是否配种</td>
+            <td><select name="is_mating">
+                <option value="0" name="is_mating"{$data.is_health=='0'?'selected':''}>否</option>
+                <option value="1" name="is_mating"{$data.is_health=='1'?'selected':''}>是</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td>图片：</td>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="pu-photo">
+                                修改前：<br><img src="{$data.photo}">
+                            </div>
+                        </td>
+                        <td>
+                            修改后：<br>
+                            <div class="upload-preview">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input class="upload-photo" type="file" name="photo"/>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </td>
+        </tr>
+    </table>
+    <div class="pp-intro">
+        <hr>
+        <h4>简介：</h4>
+
+        <!-- 加载编辑器的容器 -->
+        <script id="container" name="introduction" type="text/plain">
+            {$data.introduction}
+        </script>
+
+        <!-- 配置文件 -->
+        <script type="text/javascript" src="/phpdemo/psms/public/ueditor/ueditor.config.js"></script>
+        <!-- 编辑器源码文件 -->
+        <script type="text/javascript" src="/phpdemo/psms/public/ueditor/ueditor.all.js"></script>
+        <!-- 实例化编辑器 -->
+        <script type="text/javascript">
+            var editor = UE.getEditor('container',{
+                initialFrameWidth:700,
+                initialFrameHeight:600,
+            });
+        </script>
+    </div>
+</form>
+</body>
+</html>

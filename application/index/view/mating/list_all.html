@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<div id="f-toolbar">
+    <a href="{:url('mating/add_view')}" type="button" class="btn btn-primary">新增</a>
+</div>
+{$data->render()}
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>编号</th>
+            <th>宠物名（公）</th>
+            <th>宠物名（母）</th>
+            <th>配种时间</th>
+            <th>完成状态</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        {volist name='data' id='vo'}
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.male_pet_name}</td>
+                <td>{$vo.female_pet_name}</td>
+                <td>{$vo.mating_date}</td>
+                <td>{$vo.is_mating==1?'已完成':'未完成'}</td>
+                <td>{$vo.create_time}</td>
+                <td>
+                    <a href="{:url('mating/edit')}?id={$vo.id}" class="btn btn-danger">编辑</a>
+                    <a href="{:url('mating/delete_by_id')}?id={$vo.id}" class="btn btn-danger">删除配种</a>
+                </td>
+            </tr>
+        {/volist}
+    </table>
+</div>
+
+</body>
+</html>

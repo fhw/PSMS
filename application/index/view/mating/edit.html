@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<div id="f-toolbar">
+    <button class="btn btn-default"><a href="{:url('mating/list_all')}"><span class="glyphicon glyphicon-arrow-left">&nbsp;返回列表</span></a>
+    </button>
+</div>
+<div>
+    <form action="{:url('mating/edit')}?id={$data.id}" role="form" method="post">
+        <div class="form-group">
+            <label for="mating-id">配种编号</label>
+            <input type="text" class="form-control" id="mating-id" value="{$data.id}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="male_pet_name">宠物名（公）</label>
+            <input type="text" class="form-control" id="male_pet_name" value="{$data.male_pet_name}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="female_pet_name">宠物名（母）</label>
+            <input type="text" class="form-control" id="female_pet_name" value="{$data.female_pet_name}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="mating-date">配种日期预约</label>
+            <input type="date" class="form-control" id="mating-date" name="mating_date" value="{$data.mating_date}" required required>
+        </div>
+        <label class="radio-inline">
+            <input type="radio" name="is_mating" value="1" {$data.is_mating==1?'checked':''}> 已完成
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="is_mating" value="0" {$data.is_mating==1?'':'checked'}> 未完成
+        </label>
+        <div class="form-group">
+            <label for="create-time">创建时间</label>
+            <input type="datetime" class="form-control" id="create-time" value="{$data.create_time}" readonly>
+        </div>
+        <button type="submit" class="btn btn-default">保存</button>
+    </form>
+</div>
+</body>
+</html>

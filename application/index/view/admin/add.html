@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file='public/head'}
+<body>
+<div id="f-toolbar">
+    <button class="btn btn-default"><a href="{:url('admin/list_all')}"><span class="glyphicon glyphicon-arrow-left">&nbsp;返回列表</span></a>
+    </button>
+</div>
+<hr>
+<span class="help-block" style="color: red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;带*的为必填选项</span>
+<div id="pt-insert">
+    <form role="form" id="pt-insert-form" action="{:url('admin/add')}" method="post">
+        <table class="pt-insert-table table table-bordered">
+            <tr>
+                <th colspan="2">管理员注册</th>
+            </tr>
+            <tr>
+                <td>*账号：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="user_name" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>*密码：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>*真实姓名：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="real_name" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>*电话：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="phone" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>email：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>QQ：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="QQ">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>微信号：</td>
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="wechat">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" class="btn btn-primary" value="保存"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div>
+
+</div>
+</body>
+</html>

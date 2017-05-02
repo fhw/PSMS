@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body id="login-body">
+
+<header id="nav-login" class="nav">
+
+    <div class="nav1">
+        <img src="/phpdemo/psms/public/static/image/storeicon.png">
+        <span>猫狗宠物店</span>
+    </div>
+
+</header>
+
+<div id="login">
+    <form id="login-form" method="post">
+        <ul id="login-ul">
+            <li>用户名：<input type="text" name="user_name"></li>
+            <li>密码&nbsp;：<input type="password" name="password"></li>
+            <li>验证码：<input type="text" name="captcha"></li>
+            <li>{:captcha_img()}<span>点击图片刷新</span></li>
+            <li><button type="button" class="btn btn-primary btn-lg">登陆</button></li>
+        </ul>
+    </form>
+</div>
+<script>
+    $(function () {
+       $(".btn-lg").click(function () {
+         $.ajax({
+             url:"{:url('login/is_login')}",
+             type:'post',
+             data:$("#login-form").serialize(),
+             success:function (msg) {
+                 alert(msg);
+                 self.location="{:url('home/home')}";
+             },
+             error:function (msg) {
+                 console.log(msg);
+             }
+         });
+       });
+    });
+</script>
+</body>
+</html>

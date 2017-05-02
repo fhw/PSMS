@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<div id="f-toolbar">
+    <form method="post" action="{:url('pet/select_by_keyword')}" enctype="multipart/form-data">
+        <input type="text" name="keyword" id="pp-keyword" placeholder="请输入关键字">
+        <input type="submit" value="搜索" id="pp-search-button" class="btn btn-primary">
+    </form>
+    <a href="{:url('pet/insert')}" type="button" class="btn btn-primary">新增</a>
+</div>
+<hr>
+{$data->render()}
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>编号</th>
+            <th>图片</th>
+            <th>名字</th>
+            <th>类型</th>
+            <th>年龄（月）</th>
+            <th>性别</th>
+            <th>健康状态</th>
+            <th>操作</th>
+        </tr>
+        {volist name="data" id="vo"}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>
+                <div class="p-photo">
+                    <img src="{$vo.photo}" alt="{$vo.pet_name}"/>
+                </div>
+            </td>
+            <td>{$vo.pet_name}</td>
+            <td>{$vo.pet_type_name}</td>
+            <td>{$vo.age}</td>
+            <td>{$vo.sex=='1'?'母':'公'}</td>
+            <td>{$vo.is_health=='1'?'健康':'不健康'}</td>
+            <td>
+                <a href="{:url('pet/update')}?id={$vo.id}" type="button" class="btn btn-danger">编辑</a>
+                <a href="{:url('pet/delete_by_id')}?id={$vo.id}" type="button" class="btn btn-danger">删除</a>
+            </td>
+        </tr>
+        {/volist}
+    </table>
+</div>
+</body>
+</html>

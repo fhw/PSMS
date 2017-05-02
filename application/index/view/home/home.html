@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<script>
+    $(function () {
+        $(".admin-button").mouseover(function () {
+            $(".login-out").slideToggle();
+        });
+    });
+
+</script>
+<header id="nav-home" class="nav">
+    <!--<div class="side-button">-->
+        <!--<p></p>-->
+        <!--<p></p>-->
+        <!--<p></p>-->
+    <!--</div>-->
+    <div class="nav1">
+        <img src="/phpdemo/psms/public/static/image/storeicon.png">
+        <span>宠物店管理系统</span>
+    </div>
+    <div class="nav1-right">
+        你好！<a class="admin-button my-a" href="javascript:void(0)">
+            {$data.user_name} <span class="caret"></span>
+        </a>
+        <ul class="login-out">
+            <li><a href="{:url('home/log_out')}" class="my-black-a">登出</a></li>
+        </ul>
+    </div>
+</header>
+<div id="home-container">
+    <div class="side-nav">
+        <ul>
+            <li>
+                <a class="my-a" id="product-select" href="{:url('pet_products/select')}?p=select" target="if">商品管理</a>
+            </li>
+            <li>
+                <a class="my-a" href="{:url('pet/pet_view')}" target="if">宠物管理</a>
+            </li>
+            <li><span></span><a id="type-manager" class="my-a" href="#">分类管理</a>
+                <ul>
+                    <li>
+                        <a class="my-a" href="{:url('product_type/select')}" target="if">商品类型管理</a>
+                    </li>
+                    <li>
+                        <a class="my-a" href="{:url('pet_type/list_all')}" target="if">宠物类型管理</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a class="my-a" href="{:url('fostering/all')}" target="if">宠物寄养</a></li>
+            <li><a class="my-a" href="{:url('pet/deal_list')}" target="if">宠物交易</a></li>
+            <li><a class="my-a" href="{:url('mating/list_all')}" target="if">宠物配种</a></li>
+            <li><a class="my-a" href="{:url('pet_products/stock_list')}?p=stock_list" target="if">商品出入库</a></li>
+            <li><a class="my-a" href="{:url('admin/list_all')}" target="if">管理员信息管理</a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <iframe id="if-content" name="if"></iframe>
+    </div>
+</div>
+</body>
+</html>

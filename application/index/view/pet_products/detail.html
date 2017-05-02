@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<div id="f-toolbar">
+    <a href="{:url('pet_products/select?p=select')}" class="btn btn-primary">返回</a>
+    <button id="pp-update-button" class="btn btn-primary">修改</button>
+    <button id="pp-cancel-button" class="btn btn-primary" style="display: none">取消</button>
+    <button class="btn btn-primary">
+        <a id="pp-delete-button" href="{:url('pet_products/delete_by_id')}?id={$petproducts.0.id}">删除</a>
+    </button>
+    <input type="submit" value="提交" form="pp-detail-form" id="pp-detail-form-submit" class="btn btn-primary" style="display: none"/>
+</div>
+<hr>
+<div id="pp-detail">
+    <div id="pp-box">
+        <div class="pp-photo">
+            <img src={$petproducts.0.photo}>
+        </div>
+        <div class="pp-info-div">
+            <div class="pp-name"><p>{$petproducts.0.product_name}</p></div>
+
+            <div class="pp-info">
+                <ul>
+                    <li>ID：{$petproducts.0.id}</li>
+                    <li>分类：{$petproducts.0.type_name}</li>
+                    <li>库存：{$petproducts.0.stock}</li>
+                    <li>价格：{$petproducts.0.price}</li>
+
+                    <li>上架时间：{$petproducts.0.on_sale_date}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="pp-intro">
+        <hr>
+        <h4>简介：</h4>
+        <p>{$petproducts.0.introduction}</p>
+    </div>
+</div>
+
+<div id="pp-update" style="display: none">
+    <div>
+        <form action="{:url('pet_products/update')}" enctype="multipart/form-data"
+              id="pp-detail-form" method="post">
+            <div class="pp-photo">
+                原图：<br>
+                <img src={$petproducts.0.photo}><br>
+                修改后：<br>
+                <div class="upload-preview"></div>
+                <input class="upload-photo" type="file" name="photo">
+            </div>
+            <div class="pp-info-div">
+                <div class="pp-name"><p>商品名：<input type="text" name="product_name" value="{$petproducts.0.product_name}" required/></p>
+                </div>
+                <div class="pp-info">
+                    <ul>
+                        <li>id：<input type="text" name="id" value={$petproducts.0.id} readonly></li>
+                        <li>分类：<select name="type_id">
+                            {volist name="producttype" id="vo"}
+                            <option value="{$vo.type_id}" {$petproducts.0.type_id == $vo.type_id ? 'selected':''}>{$vo.type_name}</option>
+                            {/volist}
+                        </select></li>
+                        <li>库存：<input type="number" name="stock" value={$petproducts.0.stock} required></li>
+                        <li>价格：<input type="number" name="price" value={$petproducts.0.price} required></li>
+
+                        <li>上架时间：{$petproducts.0.on_sale_date}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pp-intro">
+                <hr>
+                <h4>简介：</h4>
+
+                    <!-- 加载编辑器的容器 -->
+                    <script id="container" name="introduction" type="text/plain">
+            {$petproducts.0.introduction}
+        </script>
+
+                <!-- 配置文件 -->
+                <script type="text/javascript" src="/phpdemo/psms/public/ueditor/ueditor.config.js"></script>
+                <!-- 编辑器源码文件 -->
+                <script type="text/javascript" src="/phpdemo/psms/public/ueditor/ueditor.all.js"></script>
+                <!-- 实例化编辑器 -->
+                <script type="text/javascript">
+                    var editor = UE.getEditor('container',{
+                        initialFrameWidth:700,
+                        initialFrameHeight:600,
+                    });
+                </script>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

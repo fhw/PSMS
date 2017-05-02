@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<div id="f-toolbar">
+    <button class="btn btn-default"><a href="{:url('mating/list_all')}"><span class="glyphicon glyphicon-arrow-left">&nbsp;返回列表</span></a>
+    </button>
+</div>
+
+<div class="mating-content">
+    <div class="page-header">
+        <h1>请选择客户的宠物<small></small></h1>
+    </div>
+    {$pet_list->render();}
+    <div class="pet-list">
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>宠物编号</th>
+                    <th>宠物名</th>
+                    <th>主人</th>
+                    <th>类型</th>
+                    <th>性别</th>
+                    <th>操作</th>
+                </tr>
+                {volist name="pet_list" id="pet_list"}
+                <tr>
+                    <td class="pet-id">{$pet_list.id}</td>
+                    <td>{$pet_list.pet_name}</td>
+                    <td>{$pet_list.master}</td>
+                    <td>{$pet_list.pet_type_name}</td>
+                    <td>{$pet_list.sex=='1'?'母':'公'}</td>
+                    <td><a class="btn btn-danger match-button">寻找配对</a></td>
+                </tr>
+                {/volist}
+            </table>
+        </div>
+    </div>
+</div>
+<div class="page-header">
+    <h1>可以进行配种的宠物<small></small></h1>
+</div>
+<div class="match-list">
+    <div class="table-responsive">
+        <table class="table match-table">
+            <tr class="table-head">
+                <th>宠物编号</th>
+                <th>宠物名</th>
+                <th>主人</th>
+                <th>类型</th>
+                <th>性别</th>
+                <th>操作</th>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    $(function () {
+        var first_id;
+        $(".match-button").click(function () {
+            first_id = $(this).parent().parent().find('.pet-id').html();
+
+            $(".table-head").siblings().empty();
+            $.ajax({
+                url: "{:url('mating/match')}",
+                data: 'id=' + first_id,
+                dataType: 'json',
+                success: function (match_list) {
+                    $.each(match_list.data, function (key, data) {
+                        var sex=(data.sex==0)?'公':'母';
+                        var u="/phpDemo/PSMS/public/index/mating/add?first_id="+first_id+"&second_id="+data.id;
+                        $(".match-table").children().append("<tr>" +
+                                "<td>" + data.id + "</td>" +
+                                "<td>" + data.pet_name + "</td>" +
+                                "<td>" + data.master + "</td>" +
+                                "<td>" + data.pet_type_name + "</td>" +
+                                "<td>" + sex + "</td>" +
+                                "<td>" + '<a href='+u+' class="btn btn-primary">选择配种</a>' + "</td>" +
+                        "</tr>"
+                        );
+
+                    });
+                }
+            });
+        });
+    });
+</script>
+</body>
+
+</html>

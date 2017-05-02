@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+
+{volist name="result" id="vo"}
+<li style="text-indent:{$vo['count']*20}px;">
+    | --<{$vo.cate_name}>{$vo['count']}
+</li>
+{/volist}
+</body>
+</html>

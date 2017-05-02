@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file='public/head'}
+<body>
+<div id="f-toolbar">
+    <a href="{:url('admin/add')}" type="button" class="btn btn-primary">新增</a>
+    <a href="{:url('role/index')}" type="button" class="btn btn-primary">角色管理</a>
+    <a href="{:url('access/index')}" type="button" class="btn btn-primary">权限管理</a>
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>管理员账号</th>
+            <th>真实姓名</th>
+            <th>电话</th>
+            <th>操作</th>
+        </tr>
+        {volist name='list' id='vo'}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.user_name}</td>
+            <td>{$vo.real_name}</td>
+            <td>{$vo.phone}</td>
+            <td>
+                <a href="{:url('admin/edit')}?id={$vo.id}" type="button" class="btn btn-danger">编辑</a>
+                <a href="{:url('admin/delete_by_id')}?id={$vo.id}" type="button" class="btn btn-danger">删除</a>
+                <a href="{:url('admin/set_role_view')}?admin_id={$vo.id}" type="button" class="btn btn-danger">设置角色</a>
+            </td>
+        </tr>
+        {/volist}
+    </table>
+
+</div>
+</body>
+</html>

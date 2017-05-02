@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file='public/head'}
+<body>
+<script>
+    (function($){
+        $.getUrlParam = function(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r!=null) return unescape(r[2]); return null;
+        }
+    })(jQuery);
+    $(function(){
+        $("#pet_type_id").attr("value",$.getUrlParam('id'));
+    })
+</script>
+<div id="f-toolbar">
+    <button class="btn btn-default"><a href="{:url('pet_type/list_all')}"><span class="glyphicon glyphicon-arrow-left">&nbsp;返回列表</span></a></button>
+</div>
+<div id="pt-insert">
+    <form id="pt-insert-form" action="{:url('pet_type/update')}" method="post">
+        <table class="pt-insert-table table table-bordered">
+            <tr>
+                <th colspan="2">修改宠物类型</th>
+            </tr>
+            <tr>
+                <td>宠物类型编号：</td>
+                <td>
+                    <input type="text" name="id" id="pet_type_id" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>修改为新的宠物类型：</td>
+                <td>
+                    <input type="text" name="pet_type_name" id="pt-insert-input" value="{$data.pet_type_name}" required>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" class="btn btn-primary"/>
+                </td>
+            </tr>
+        </table>
+
+
+    </form>
+</div>
+
+</body>
+</html>

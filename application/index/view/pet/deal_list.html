@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<div id="f-toolbar">
+    <a href="{:url('pet/deal_list')}" id="selling" class="btn btn-primary">在售宠物列表</a>
+    <a href="{:url('pet/sold_list')}" id="sold" class="btn btn-primary">已出售宠物列表</a>
+</div>
+{$data->render()}
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>编号</th>
+            <th>图片</th>
+            <th>名字</th>
+            <th>类型</th>
+            <th>年龄（月）</th>
+            <th>性别</th>
+            <th>健康状态</th>
+            <th>操作</th>
+        </tr>
+        {volist name="data" id="vo"}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>
+                <div class="p-photo">
+                    <img src="{$vo.photo}" alt="{$vo.pet_name}"/>
+                </div>
+            </td>
+            <td>{$vo.pet_name}</td>
+            <td>{$vo.pet_type_name}</td>
+            <td>{$vo.age}</td>
+            <td>{$vo.sex=='1'?'母':'公'}</td>
+            <td>{$vo.is_health=='1'?'健康':'不健康'}</td>
+            <td>
+                <a href="{:url('pet/detail')}?id={$vo.id}" type="button" class="btn btn-danger">详情</a>
+                <a id="deal-price-button" href="{:url('pet/deal_price')}?id={$vo.id}" type="button" class="btn btn-danger
+{$_SERVER['PHP_SELF']=="/phpDemo/PSMS/public/index.php/index/pet/sold_list.html"? 'disabled':''}
+">出售</a>
+            </td>
+        </tr>
+        {/volist}
+    </table>
+</div>
+</body>
+</html>

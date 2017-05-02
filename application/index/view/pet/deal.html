@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<script>
+    (function ($) {
+        $.getUrlParam = function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+    })(jQuery);
+    $(function () {
+        $(".pet-id").append($.getUrlParam('id'));
+        $("#pet-detail-button").attr('href', '{:url('pet/detail')}?id=' + $.getUrlParam('id'));
+        $("#update-form").attr("action", "{:url('pet/update')}?id=" + $.getUrlParam('id'));
+    })
+</script>
+<div id="f-toolbar">
+    <a href="{:url('pet/deal_list')}" type="button" class="btn btn-default">返回列表</a>
+    <a href="" id="pet-detail-button" type="button" class="btn btn-primary">宠物详情</a>
+</div>
+<div class="deal-pet-detail panel panel-info">
+    <div class="pet-id panel-heading">
+        宠物编号：
+    </div>
+    <div class="panel-body">
+        <div class="pet-photo">
+            <img id="pet_img" src="">
+        </div>
+    </div>
+    <div class="p-detail">
+        <ul>
+        </ul>
+    </div>
+</div>
+<form role="form" id="deal-form">
+    <div class="form-group">
+        <label for="price">价格</label>
+        <input type="text" class="form-control" id="price" name="price" placeholder="输入价格，请保留两位小数">
+    </div>
+    <button id="deal-form-button" type="button" class="btn btn-default">出售</button>
+</form>
+
+<script>
+    $(document).ready(function () {
+        function get_pet_detail(id) {
+            $.ajax({
+                url: "{:url('pet/find_by_id')}",
+                data: {
+                    "id": id,
+                },
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    $("#pet_img").attr("src", data.photo);
+                    var sex=(data.sex==0)?'公':'母';
+                    $(".p-detail ul").append('<li>宠物名：' + data.pet_name + '</li>');
+                    $(".p-detail ul").append('<li>性别：' + sex + '</li>');
+                    $(".p-detail ul").append('<li>年龄：' + data.age + '个月</li>');
+                }
+            });
+        }
+
+        $("#deal-form-button").click(function () {
+            $.ajax({
+                url: "{:url('pet/deal_price')}",
+                type:"post",
+                data:$("#deal-form").serialize() + "&id="+$.getUrlParam('id'),
+                success: function(msg)
+                {
+                    alert(msg);
+                    self.location="{:url('pet/deal_list')}";
+                },
+                error:function(msg){
+                    alert(msg)
+                }
+            });
+        });
+
+        get_pet_detail($.getUrlParam('id'));
+    });
+</script>
+</body>
+</html>

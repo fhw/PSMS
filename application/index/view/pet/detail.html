@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="public/head"}
+<body>
+<div id="f-toolbar">
+    <a href="{:url('pet/deal_list')}" type="button" class="btn btn-default">返回列表</a>
+</div>
+<div class="pet-detail-content">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>宠物编号：{$data.id}</h4>
+        </div>
+
+        <div class="panel-body">
+            <div class="pet-photo">
+                <img src={$data.photo}>
+            </div>
+            <div class="pet-info">
+                <div class="list-group">
+                    <a href="javascript:void(0)" class="list-group-item active">
+                        宠物名：{$data.pet_name}
+                    </a>
+                    <a href="javascript:void(0)" class="list-group-item">性别：{$data.sex==1?"母":"公"}</a>
+                    <a href="javascript:void(0)" class="list-group-item">类型：{$data.pet_type_name}</a>
+                    <a href="javascript:void(0)" class="list-group-item">年龄：{$data.age}个月</a>
+                    <a href="javascript:void(0)" class="list-group-item">主人：{$data.master}</a>
+                    <a href="javascript:void(0)" class="list-group-item">价格：{$data.price}</a>
+                    <a href="javascript:void(0)" class="list-group-item">是否健康：{$data.sex==1?"否":"是"}</a>
+                    <a href="javascript:void(0)" class="list-group-item">是否出售：{$data.is_onsale==1?"否":"是"}</a>
+                    <a href="javascript:void(0)" class="list-group-item">是否配种：{$data.is_mating==1?"否":"是"}</a>
+                </div>
+            </div>
+        </div>
+        <div class="pet-intro">
+            <hr>
+            <h3>详情：</h3>
+            {$data.introduction}
+        </div>
+    </div>
+</div>
+</body>
+</html>

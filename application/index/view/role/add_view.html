@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file='public/head'}
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>添加新角色</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <hr>
+            <form action='{:url("role/add")}' method="post">
+                <div class="form-group">
+                    <label for="role-name">角色名称</label>
+                    <input type="text" class="form-control" id="role-name" name="name" placeholder="请输入角色的名称" aria-describedby="helpBlock2">
+                    <span class="help-block"></span>
+                </div>
+                <button type="submit" class="btn btn-default">保存</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#role-name").on("blur",function (event) {
+            $.ajax({
+                url:'{:url("role/add")}',
+                type:'post',
+                data:{name:this.value},
+                success:function (msg) {
+                    $('#role-name').next().css('color','red').text(msg);
+//                $('#access-title').next().text(msg);
+                },
+                error:function (msg) {
+                    console.log("错误："+msg);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
